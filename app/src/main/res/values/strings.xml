@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">智能相册</string>
+    <string name="tab_map">地图</string>
+    <string name="tab_locations">位置</string>
+    <string name="search_hint">搜索位置…</string>
+    <string name="no_photos">暂无带位置信息的照片</string>
+    <string name="scan_photos">正在扫描照片…</string>
+    <string name="photo_count">%1$d 张照片</string>
+    <string name="permission_required">需要照片访问权限</string>
+    <string name="grant_permission">授予权限</string>
+    <string name="location_unknown">未知位置</string>
+    <string name="back">返回</string>
+    <string name="photo_detail">照片详情</string>
+    <string name="taken_at">拍摄时间：%1$s</string>
+    <string name="taken_at_location">拍摄位置：%1$s</string>
+    <string name="no_gps">该照片无位置信息</string>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 字阶 - 有断崖，标题不能只是大一点的正文 -->
+    <dimen name="text_display">34sp</dimen>
+    <dimen name="text_headline">28sp</dimen>
+    <dimen name="text_title">22sp</dimen>
+    <dimen name="text_subtitle">18sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_body_small">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_overline">11sp</dimen>
+    
+    <!-- 圆角 - 3个角色值，只有可点的东西才是圆的 -->
+    <dimen name="radius_small">8dp</dimen>
+    <dimen name="radius_medium">12dp</dimen>
+    <dimen name="radius_large">16dp</dimen>
+    <dimen name="radius_xlarge">24dp</dimen>
+    <dimen name="radius_full">9999dp</dimen>
+    
+    <!-- 栅格 - 留白跟视口走，8dp基准 -->
+    <dimen name="spacing_1">4dp</dimen>
+    <dimen name="spacing_2">8dp</dimen>
+    <dimen name="spacing_3">12dp</dimen>
+    <dimen name="spacing_4">16dp</dimen>
+    <dimen name="spacing_5">20dp</dimen>
+    <dimen name="spacing_6">24dp</dimen>
+    <dimen name="spacing_8">32dp</dimen>
+    <dimen name="spacing_10">40dp</dimen>
+    <dimen name="spacing_12">48dp</dimen>
+    
+    <!-- 页面边距 -->
+    <dimen name="page_margin_horizontal">16dp</dimen>
+    <dimen name="page_margin_vertical">16dp</dimen>
+    
+    <!-- 卡片样式 -->
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_margin">12dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    
+    <!-- 按钮样式 -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_corner_radius">12dp</dimen>
+    <dimen name="button_padding_horizontal">24dp</dimen>
+    <dimen name="button_padding_vertical">12dp</dimen>
+    
+    <!-- 底部导航栏 -->
+    <dimen name="navigation_height">64dp</dimen>
+    <dimen name="navigation_icon_size">24dp</dimen>
+    <dimen name="navigation_elevation">8dp</dimen>
+    
+    <!-- 地图按钮 -->
+    <dimen name="map_button_size">48dp</dimen>
+    <dimen name="map_button_corner_radius">12dp</dimen>
+    <dimen name="map_button_margin">12dp</dimen>
+    
+    <!-- 搜索框 -->
+    <dimen name="search_height">48dp</dimen>
+    <dimen name="search_corner_radius">12dp</dimen>
+    <dimen name="search_padding_horizontal">16dp</dimen>
+    
+    <!-- 列表项 -->
+    <dimen name="list_item_height">72dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
+    
+    <!-- 缩略图 -->
+    <dimen name="thumbnail_size">64dp</dimen>
+    <dimen name="thumbnail_corner_radius">12dp</dimen>
+    
+    <!-- 工具栏 -->
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_title_size">20sp</dimen>
+    
+    <!-- 启动页 -->
+    <dimen name="splash_title_size">32sp</dimen>
+    <dimen name="splash_subtitle_size">16sp</dimen>
+</resources>

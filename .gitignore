@@ -1,0 +1,39 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.dex
+*.class
+
+# Generated build output
+/build
+/app/build
+/buildSrc/build
+/*/build
+
+# Gradle
+.gradle
+**/.gradle
+
+# Local configuration
+local.properties
+gradle.properties.local
+
+# 签名文件
+*.jks
+*.keystore
+keystore.properties
+
+# IDE / OS
+.idea
+*.iml
+*.iml*
+.DS_Store
+Thumbs.db
+/captures
+.externalNativeBuild
+.cxx
+
+# Log / temp
+*.log
+*.tmp

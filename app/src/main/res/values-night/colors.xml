@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 主色调 - 现代蓝（深色模式稍微提亮） -->
+    <color name="primary">#42A5F5</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#90CAF9</color>
+    <color name="primary_container">#003366</color>
+    <color name="on_primary">#001D36</color>
+    <color name="on_primary_container">#D3E4FD</color>
+
+    <!-- 次要颜色 - 现代橙 -->
+    <color name="secondary">#FFB74D</color>
+    <color name="secondary_dark">#FF8F00</color>
+    <color name="secondary_light">#FFDDB2</color>
+    <color name="secondary_container">#4A2E00</color>
+    <color name="on_secondary">#2A1800</color>
+    <color name="on_secondary_container">#FFDDB2</color>
+
+    <!-- 兼容旧布局 -->
+    <color name="accent">#FFB74D</color>
+
+    <!-- 背景和表面（深色模式） -->
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_variant">#2C2C2C</color>
+    <color name="on_background">#E0E0E0</color>
+    <color name="on_surface">#E0E0E0</color>
+    <color name="on_surface_variant">#A0A0A0</color>
+
+    <!-- 文本颜色（深色模式） -->
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_secondary">#A0A0A0</color>
+    <color name="text_hint">#707070</color>
+    <color name="divider">#3A3A3A</color>
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#4A454E</color>
+
+    <!-- 功能颜色 -->
+    <color name="error">#F2B8B5</color>
+    <color name="error_container">#410E0B</color>
+    <color name="on_error">#410E0B</color>
+    <color name="on_error_container">#F2B8B5</color>
+    <color name="success">#81C784</color>
+    <color name="success_container">#1B3D1F</color>
+    <color name="warning">#FFB74D</color>
+    <color name="warning_container">#4A2E00</color>
+    <color name="info">#4FC3F7</color>
+    <color name="info_container">#013349</color>
+
+    <!-- 地图相关 -->
+    <color name="map_marker">#EF5350</color>
+    <color name="my_location">#42A5F5</color>
+
+    <!-- 卡片样式（深色模式） -->
+    <color name="card_background">#1E1E1E</color>
+    <color name="card_shadow">#28000000</color>
+    <color name="card_elevation">#14000000</color>
+
+    <!-- 导航栏（深色模式） -->
+    <color name="navigation_background">#1E1E1E</color>
+    <color name="navigation_selected">#42A5F5</color>
+    <color name="navigation_unselected">#A0A0A0</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="search_bg">#2C2C2C</color>
+</resources>

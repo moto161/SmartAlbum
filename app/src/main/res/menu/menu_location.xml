@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_timeline"
+        android:title="时间轴视图"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search_photos"
+        android:title="搜索照片"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_export"
+        android:title="导出缓存"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_import"
+        android:title="导入缓存"
+        app:showAsAction="never" />
+
+</menu>

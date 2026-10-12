@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 默认禁止明文传输 -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 允许高德地图SDK的域名（地图SDK仍需明文，勿删） -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">amap.com</domain>
+        <domain includeSubdomains="true">autonavi.com</domain>
+        <domain includeSubdomains="true">aliyun.com</domain>
+    </domain-config>
+</network-security-config>
