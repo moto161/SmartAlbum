@@ -245,6 +245,13 @@ class SettingsFragment : Fragment() {
                 .show()
         }
 
+        // 开源版公开入口：轨迹管理（原隐藏激活码后门，现改为设置页直接进入）
+        binding.cardTrailAdmin.setOnClickListener {
+            val intent = android.content.Intent(requireContext(),
+                com.example.smartalbum.ui.admin.AdminActivity::class.java)
+            ActivityAnimationUtil.startActivityWithAnimation(requireContext(), intent)
+        }
+
         binding.cardNoLocationTime.setOnClickListener {
             androidx.appcompat.app.AlertDialog.Builder(requireContext())
                 .setTitle("选择无位置照片时间范围")
