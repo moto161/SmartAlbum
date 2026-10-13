@@ -37,8 +37,8 @@ android {
         applicationId "com.example.smartalbum"
         minSdk 27
         targetSdk 34
-        versionCode 162
-        versionName "5.13.93"
+        versionCode 163
+        versionName "5.13.94"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // 后端地址占位：本开源版不内置服务器，如需位置上报/自动更新，请部署自己的后端

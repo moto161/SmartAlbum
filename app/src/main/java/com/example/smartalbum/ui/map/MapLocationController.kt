@@ -18,6 +18,7 @@ import com.amap.api.maps2d.AMap
 import com.amap.api.maps2d.model.BitmapDescriptor
 import com.amap.api.maps2d.model.BitmapDescriptorFactory
 import com.amap.api.maps2d.model.LatLng
+import com.example.smartalbum.data.LocationGroup
 import com.example.smartalbum.util.LogUtil
 
 /**
@@ -54,6 +55,11 @@ class MapLocationController(
      * 现在保存引用，下次定位前先移除旧的，保证地图上永远只有一个「我的位置」。
      */
     private var myLocationMarker: com.amap.api.maps2d.model.Marker? = null
+
+    // 照片位置分组（由 Fragment 同步过来），用于「红点融合」：
+    // 当搜索/定位的红点与某个照片组高度重合时，把该照片组挂到红点 object 上，
+    // 点击红点即可打开该位置的照片（而不是被红点拦截、点不到底下的照片）。
+    private var photoGroups: List<LocationGroup> = emptyList()
 
     // 定位结果回调，通知Fragment更新UI
     var onLocationResult: ((LatLng, String, String) -> Unit)? = null  // (位置, 标题, 位置名称)
@@ -191,6 +197,13 @@ class MapLocationController(
             // 2026-10-11：zIndex 置顶，确保红色搜索/定位标记永远盖在聚合气泡之上，
             // 不会被相机缩放时重新渲染的聚合点遮挡。
             myLocationMarker?.zIndex = 1000f
+            // 2026-10-13：红点融合——若红点与某个照片组高度重合（<FUSION_RADIUS_METERS 米），
+            // 把该照片组挂到红点 object 上，点击红点即可打开该位置的照片，
+            // 解决之前"红点盖住蓝色照片点、点不开照片"的问题。
+            val nearest = findNearestPhotoGroup(latLng)
+            if (nearest != null) {
+                myLocationMarker?.`object` = nearest
+            }
         } else {
             map.addMarker(markerOptions)
         }
@@ -300,6 +313,14 @@ class MapLocationController(
     }
 
     /**
+     * 同步照片位置分组，供红点融合命中测试使用。
+     * Fragment 在每次 locationGroups 变化时调用。
+     */
+    fun setPhotoGroups(groups: List<LocationGroup>) {
+        this.photoGroups = groups
+    }
+
+    /**
      * 获取当前位置
      */
     fun getCurrentLocation(): LatLng? = currentLocation
@@ -323,5 +344,38 @@ class MapLocationController(
         const val DEFAULT_ZOOM = 15f
         // 搜索 POI 结果用 17f（街道级，能看到周边门牌和马路）
         const val POI_ZOOM = 17f
+        // 红点融合半径：红点与照片组距离小于此值视为「高度重合」，挂上该照片组。
+        const val FUSION_RADIUS_METERS = 50.0
+    }
+
+    /**
+     * 在照片组中找离给定坐标最近、且在 FUSION_RADIUS_METERS 内的组。
+     * 用于红点融合：让重合处的红点可以直接打开照片。
+     */
+    private fun findNearestPhotoGroup(latLng: LatLng): LocationGroup? {
+        if (photoGroups.isEmpty()) return null
+        var best: LocationGroup? = null
+        var bestDist = Double.MAX_VALUE
+        for (g in photoGroups) {
+            val d = haversineMeters(latLng.latitude, latLng.longitude, g.latitude, g.longitude)
+            if (d < bestDist) {
+                bestDist = d
+                best = g
+            }
+        }
+        return if (bestDist <= FUSION_RADIUS_METERS) best else null
+    }
+
+    /**
+     * 两个经纬度间的球面距离（米）。
+     */
+    private fun haversineMeters(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val r = 6371000.0
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = Math.pow(Math.sin(dLat / 2.0), 2.0) +
+            Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+            Math.pow(Math.sin(dLon / 2.0), 2.0)
+        return r * 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a))
     }
 }

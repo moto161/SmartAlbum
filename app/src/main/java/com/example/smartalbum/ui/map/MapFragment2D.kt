@@ -111,6 +111,26 @@ class MapFragment2D : Fragment(), PoiSearch.OnPoiSearchListener {
         com.example.smartalbum.util.ThemeManager.addOnThemeChangedListener(themeChangedListener)
         binding.mapView.onCreate(savedInstanceState)
         aMap = binding.mapView.map
+        // 2026-10-13：显式开启地图交互（高德 2D 默认本就开启，这里兜底；
+        // 平板上 +/- 缩放按钮比双指更好点，同时开启比例尺）。
+        aMap?.uiSettings?.apply {
+            isZoomControlsEnabled = true
+            isZoomGesturesEnabled = true
+            isScrollGesturesEnabled = true
+            isScaleControlsEnabled = true
+        }
+        // 瓦片 4 秒未加载完成 → 提示，便于在设备上自查 key/网络（灰图多为此类原因）。
+        var mapTilesLoaded = false
+        aMap?.setOnMapLoadedListener { mapTilesLoaded = true }
+        binding.mapView.postDelayed({
+            if (_binding != null && isAdded && !mapTilesLoaded) {
+                android.widget.Toast.makeText(
+                    requireContext(),
+                    "地图瓦片加载较慢，请检查网络或高德 key",
+                    android.widget.Toast.LENGTH_LONG
+                ).show()
+            }
+        }, 4000)
         markerController = MapMarkerController(aMap, requireContext())
         locationController = MapLocationController(this, aMap).apply {
             onLocationResult = { latLng, title, locationName ->
@@ -410,6 +430,8 @@ class MapFragment2D : Fragment(), PoiSearch.OnPoiSearchListener {
                         }
                         locationGroups = updatedGroups
                         markerController?.setGroups(locationGroups)
+                        // 2026-10-13：同步给定位控制器，红点融合拿到最新（已解析地名）的分组
+                        locationController?.setPhotoGroups(locationGroups)
                         updateMarkerTitles()
                     }
                 }
@@ -431,6 +453,8 @@ class MapFragment2D : Fragment(), PoiSearch.OnPoiSearchListener {
 
         // 使用MapMarkerController管理标记点渲染
         markerController?.setGroups(locationGroups)
+        // 2026-10-13：同步照片组给定位控制器，供红点融合命中测试使用
+        locationController?.setPhotoGroups(locationGroups)
         markerController?.showMarkers()
 
         // 只在第一次加载时移动相机到所有标记点范围内
@@ -459,25 +483,32 @@ class MapFragment2D : Fragment(), PoiSearch.OnPoiSearchListener {
         if (!isAdded) return
         val m = marker as? com.amap.api.maps2d.model.Marker ?: return
         val obj = m.`object`
-        if (obj !is ClusterCalculator.Cluster) return
-        if (obj.count == 1 && obj.groups.isNotEmpty()) {
-            // 单个标记点：进入照片画廊
-            val intent = GalleryActivity.newIntent(requireContext(), obj.groups[0])
-            ActivityAnimationUtil.startActivityWithAnimation(requireContext(), intent)
-        } else if (obj.count > 1) {
-            // 聚合标记点：放大地图，让聚合点散开
-            val zoomIncrement = when {
-                obj.count >= 50 -> 4f
-                obj.count >= 10 -> 3f
-                else -> 2f
-            }
-            val targetZoom = minOf(aMap?.cameraPosition?.zoom ?: 10f + zoomIncrement, 18f)
-            aMap?.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(obj.latitude, obj.longitude),
-                    targetZoom
+        if (obj is ClusterCalculator.Cluster) {
+            if (obj.count == 1 && obj.groups.isNotEmpty()) {
+                // 单个标记点：进入照片画廊
+                val intent = GalleryActivity.newIntent(requireContext(), obj.groups[0])
+                ActivityAnimationUtil.startActivityWithAnimation(requireContext(), intent)
+            } else if (obj.count > 1) {
+                // 聚合标记点：放大地图，让聚合点散开
+                val zoomIncrement = when {
+                    obj.count >= 50 -> 4f
+                    obj.count >= 10 -> 3f
+                    else -> 2f
+                }
+                val targetZoom = minOf(aMap?.cameraPosition?.zoom ?: 10f + zoomIncrement, 18f)
+                aMap?.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(obj.latitude, obj.longitude),
+                        targetZoom
+                    )
                 )
-            )
+            }
+        } else if (obj is LocationGroup) {
+            // 2026-10-13：红点融合——搜索/定位的红点与照片高度重合时，
+            // 该红点 object 挂的是照片组，点击直接打开该位置的照片，
+            // 解决"红点盖住蓝色照片点、点不开照片"的问题。
+            val intent = GalleryActivity.newIntent(requireContext(), obj)
+            ActivityAnimationUtil.startActivityWithAnimation(requireContext(), intent)
         }
     }
 
